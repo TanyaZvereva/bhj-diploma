@@ -9,8 +9,16 @@ class Entity {
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static list( data, callback = f => f ) {
-
+  static URL = ''
+  static list(data, callback = f => f) {
+    createRequest({
+      url: Entity.URL,
+      method: "GET",
+      data,
+      callback: (err, response) => {
+        callback(err, response)
+      }
+    })
   }
 
   /**
@@ -18,24 +26,84 @@ class Entity {
    * на сервер. (в зависимости от того,
    * что наследуется от Entity)
    * */
-  static create( data, callback = f => f ) {
-
+  static create(data, callback = f => f) {
+    console.log(data); // { mail: 'ivan@biz.pro' }
+    // ... добавляем _method к data
+    Object.assign(data, {
+      _method: 'PUT'
+    })
+    console.log(data); // { mail: 'ivan@biz.pro', _method: 'PUT' }
+    createRequest({
+      url: Entity.URL,
+      method: "POST",
+      data,
+      callback: (err, response) => {
+        callback(err, response)
+      }
+    })
   }
 
   /**
    * Получает информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static get( id = '', data, callback = f => f ) {
-
+  static get(id = '', data, callback = f => f) {
+    createRequest({
+      url: Entity.URL + id,
+      method: "GET",
+      data,
+      callback: (err, response) => {
+        callback(err, response)
+      }
+    })
   }
 
   /**
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove( id = '', data, callback = f => f ) {
-
+  static remove(id = '', data, callback = f => f) {
+    Object.assign(data, {
+      id: id,
+      _method: 'DELETE'
+    })
+    createRequest({
+      url: Entity.URL,
+      method: "POST",
+      data,
+      callback: (err, response) => {
+        callback(err, response)
+      }
+    })
   }
-}
 
+}
+// const data = {
+//   mail: 'ivan@biz.pro',
+//   password: 'odinodin'
+// };
+// console.log(Entity.URL); // ''
+// Entity.list(data, function (err, response) {
+//   console.log(response)
+//   // эта функция работает аналогично callback в createRequest
+// });
+// const data = {
+//   mail: 'ivan@biz.pro'
+// };
+// Entity.create(data, function (err, response) {
+//   console.log(response)
+//   // эта функция работает аналогично callback в createRequest
+// });
+// Entity.get(21, {
+//   hello: 'kitty'
+// }, function (err, response) {
+//   console.log(response)
+// });
+// const data = {
+//   mail: 'ivan@biz.pro'
+// };
+// Entity.remove(21, {
+//   hello: 'kitty'
+// }, function (err, response) {
+//   console.log(response)
+// });
