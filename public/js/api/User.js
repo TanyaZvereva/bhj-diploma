@@ -10,7 +10,7 @@ class User {
    * */
   static URL = '/user'
   static setCurrent(user) {
-    localStorage.user = JSON.stringify(user);
+    localStorage.user = JSON.stringify(user)
     console.log(localStorage['user'])
   }
 
@@ -19,7 +19,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    delete localStorage.user;
+    delete localStorage.user
   }
 
   /**
@@ -27,10 +27,10 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    if (localStorage.user) {
-      return JSON.parse(localStorage.user);
+    if (localStorage.user && localStorage.user !== undefined){
+      return JSON.parse(localStorage.user)
     } else {
-      return underfind
+      return undefined
     }
   }
 
@@ -43,7 +43,13 @@ class User {
       url: User.URL + '/current',
       method: "GET",
       data,
-      callback
+      callback: ( err, response ) => {
+        console.log(response)
+        if(response.success === false){
+          User.unsetCurrent()
+        }
+        callback(err, response)
+      }
     })
   }
 
@@ -54,6 +60,7 @@ class User {
    * User.setCurrent.
    * */
   static login(data, callback = f => f) {
+    console.log(data)
     createRequest({
       url: User.URL + '/login',
       method: "POST",
@@ -81,13 +88,14 @@ class User {
    * Производит выход из приложения. После успешного
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
-  static logout(data, callback = f => f) {
+  static logout(callback = f => f) {
     createRequest({
       url: User.URL + '/logout',
       method: "POST",
-      data,
+      // data,
       callback
     })
+    User.unsetCurrent()
   }
 }
 
@@ -97,10 +105,7 @@ class User {
 //   password: 'abracadabra'
 // }
 // производим регистрацию
-// User.register(data, (err, response) => {
-//   console.log(response);
-//   User.setCurrent(response.user)
-// });
+
 // console.log(localStorage)
 // const current = User.current();
 // console.log(current)
