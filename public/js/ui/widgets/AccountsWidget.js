@@ -13,7 +13,13 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (element) {
+      this.element = element
+      this.registerEvents()
+      this.update()
+    } else {
+      throw new Error("Ошибка!")
+    }
   }
 
   /**
@@ -24,6 +30,12 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    const account = this.element.querySelector('.create-account')
+    account.onclick = () => {
+      const createAccount = App.getModal('createAccount')
+      const modal = new Modal(createAccount.element)
+      modal.open()
+    }
 
   }
 
@@ -38,7 +50,15 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-
+    if(User.current()){
+      Account.list(User.current(), (err, response) =>{
+        console.log(response)
+       if(response.success){
+        // renderItem(response.list)
+        AccountsWidget.clear()
+       }
+      })
+    }
   }
 
   /**
@@ -47,7 +67,7 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-
+   
   }
 
   /**
@@ -67,7 +87,7 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML( item ) {
-
+    
   }
 
   /**
@@ -77,6 +97,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem( item ) {
-
+   console.log(item)
   }
 }
