@@ -11,7 +11,6 @@ class User {
   static URL = '/user'
   static setCurrent(user) {
     localStorage.user = JSON.stringify(user)
-    console.log(localStorage['user'])
   }
 
   /**
@@ -40,13 +39,12 @@ class User {
    * */
   static fetch(data, callback = f => f) {
     createRequest({
-      url: User.URL + '/current',
+      url: this.URL + '/current',
       method: "GET",
       data,
       callback: ( err, response ) => {
-        console.log(response)
         if(response.success === false){
-          User.unsetCurrent()
+          this.unsetCurrent()
         }
         callback(err, response)
       }
@@ -60,12 +58,14 @@ class User {
    * User.setCurrent.
    * */
   static login(data, callback = f => f) {
-    console.log(data)
     createRequest({
-      url: User.URL + '/login',
+      url: this.URL + '/login',
       method: "POST",
       data,
-      callback
+      callback: (err, response) => {
+        this.setCurrent(response.user)
+        callback(err, response)
+      }
     })
   }
 
@@ -77,10 +77,13 @@ class User {
    * */
   static register(data, callback = f => f) {
     createRequest({
-      url: User.URL + '/register',
+      url: this.URL + '/register',
       method: "POST",
       data,
-      callback
+      callback: (err, response) => {
+        this.setCurrent(response.user)
+        callback(err, response)
+      }
     })
   }
 
@@ -90,12 +93,12 @@ class User {
    * */
   static logout(callback = f => f) {
     createRequest({
-      url: User.URL + '/logout',
+      url: this.URL + '/logout',
       method: "POST",
       // data,
       callback
     })
-    User.unsetCurrent()
+    this.unsetCurrent()
   }
 }
 
