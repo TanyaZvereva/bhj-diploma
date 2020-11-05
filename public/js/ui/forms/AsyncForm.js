@@ -43,7 +43,7 @@ class AsyncForm {
   getData() {
     let data = {}
     const formData = new FormData(this.element)
-      entries = formData.entries()
+    const entries = formData.entries()
     for (let item of entries) {
       const key = item[0],
         value = item[1];
