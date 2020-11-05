@@ -12,7 +12,7 @@ class Entity {
   static URL = ''
   static list(data, callback = f => f) {
     createRequest({
-      url: Entity.URL,
+      url: this.URL,
       method: "GET",
       data,
       callback: (err, response) => {
@@ -34,7 +34,7 @@ class Entity {
     })
     console.log(data); // { mail: 'ivan@biz.pro', _method: 'PUT' }
     createRequest({
-      url: Entity.URL,
+      url: this.URL,
       method: "POST",
       data,
       callback: (err, response) => {
@@ -49,7 +49,7 @@ class Entity {
    * */
   static get(id = '', data, callback = f => f) {
     createRequest({
-      url: Entity.URL + id,
+      url: this.URL + id,
       method: "GET",
       data,
       callback: (err, response) => {
@@ -68,7 +68,7 @@ class Entity {
       _method: 'DELETE'
     })
     createRequest({
-      url: Entity.URL,
+      url: this.URL,
       method: "POST",
       data,
       callback: (err, response) => {
