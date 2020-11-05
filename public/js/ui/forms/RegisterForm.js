@@ -14,7 +14,6 @@ class RegisterForm extends AsyncForm {
     User.register(options.data, (err, response) => {
       this.element.reset()
       App.setState( 'user-logged' )
-      User.setCurrent(response.user)
       const modal = new Modal(this.element.closest('.modal'))
       modal.close()
     })
