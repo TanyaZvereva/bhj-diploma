@@ -14,7 +14,6 @@ class LoginForm extends AsyncForm {
     User.login(options.data, (err, response) => {
       this.element.reset()
       App.setState( 'user-logged' )
-      console.log(response)
       const modal = new Modal(this.element.closest('.modal'))
       modal.close()
     })
