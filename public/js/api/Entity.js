@@ -27,12 +27,10 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback = f => f) {
-    console.log(data); // { mail: 'ivan@biz.pro' }
-    // ... добавляем _method к data
+    console.log(data)
     Object.assign(data, {
       _method: 'PUT'
     })
-    console.log(data); // { mail: 'ivan@biz.pro', _method: 'PUT' }
     createRequest({
       url: this.URL,
       method: "POST",
@@ -49,7 +47,7 @@ class Entity {
    * */
   static get(id = '', data, callback = f => f) {
     createRequest({
-      url: this.URL + id,
+      url: this.URL + '/' + id,
       method: "GET",
       data,
       callback: (err, response) => {
@@ -76,34 +74,5 @@ class Entity {
       }
     })
   }
-
+  
 }
-// const data = {
-//   mail: 'ivan@biz.pro',
-//   password: 'odinodin'
-// };
-// console.log(Entity.URL); // ''
-// Entity.list(data, function (err, response) {
-//   console.log(response)
-//   // эта функция работает аналогично callback в createRequest
-// });
-// const data = {
-//   mail: 'ivan@biz.pro'
-// };
-// Entity.create(data, function (err, response) {
-//   console.log(response)
-//   // эта функция работает аналогично callback в createRequest
-// });
-// Entity.get(21, {
-//   hello: 'kitty'
-// }, function (err, response) {
-//   console.log(response)
-// });
-// const data = {
-//   mail: 'ivan@biz.pro'
-// };
-// Entity.remove(21, {
-//   hello: 'kitty'
-// }, function (err, response) {
-//   console.log(response)
-// });
