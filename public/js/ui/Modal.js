@@ -21,16 +21,15 @@ class Modal {
       throw new Error("Ошибка!")
     }
   }
+
   /**
    * При нажатии на элемент с data-dismiss="modal"
    * должен закрыть текущее окно
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    console.log(this.allCloseElements)
     Array.from(this.allCloseElements).forEach(el => {
       el.onclick = () => {
-        console.log(111)
         this.onClose()
       }
     })
@@ -62,7 +61,7 @@ class Modal {
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close() {
-    console.log(this.element)
     this.element.style.display = "none"
   }
+  
 }
