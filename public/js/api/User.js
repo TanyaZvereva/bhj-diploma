@@ -26,7 +26,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    if (localStorage.user && localStorage.user !== undefined){
+    if (localStorage.user && localStorage.user !== undefined) {
       return JSON.parse(localStorage.user)
     } else {
       return undefined
@@ -95,39 +95,9 @@ class User {
     createRequest({
       url: this.URL + '/logout',
       method: "POST",
-      // data,
       callback
     })
     this.unsetCurrent()
   }
 }
 
-// const data = {
-//   name: 'Vlad14',
-//   email: 'test14@test.ru',
-//   password: 'abracadabra'
-// }
-// производим регистрацию
-
-// console.log(localStorage)
-// const current = User.current();
-// console.log(current)
-// const current = User.current();
-// User.unsetCurrent();
-// console.log(current);
-// User.fetch(User.current(), (err, response) => {
-//   console.log(response.user.id); // 2
-//   if (response.success) {
-//     User.setCurrent(response.user)
-//   } else {
-//     User.unsetCurrent()
-//   }
-// });
-// const data = {
-//   email: 'test@test.ru',
-//   password: 'abracadabra'
-// }
-// User.logout(data, (err, response) => {
-//   console.log(response); // Ответ
-//   User.setCurrent(response.user)
-// });
