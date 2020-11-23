@@ -15,7 +15,6 @@ class AsyncForm {
   constructor(element) {
     if (element) {
       this.element = element
-      console.log(element)
       this.registerEvents()
     } else {
       throw new Error("Ошибка!")
@@ -68,4 +67,5 @@ class AsyncForm {
       data: this.getData()
     })
   }
+  
 }
