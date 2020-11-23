@@ -15,7 +15,6 @@ class AccountsWidget {
   constructor( element ) {
     if (element) {
       this.element = element
-      this.registerEvents()
       this.update()
     } else {
       throw new Error("Ошибка!")
@@ -36,7 +35,12 @@ class AccountsWidget {
       const modal = new Modal(createAccount.element)
       modal.open()
     }
-
+    const accountList = this.element.querySelectorAll('.account')
+    Array.from(accountList).forEach(li => {
+      li.onclick = (event) => {
+        this.onSelectAccount(event.currentTarget)
+      }
+    })
   }
 
   /**
@@ -52,10 +56,10 @@ class AccountsWidget {
   update() {
     if(User.current()){
       Account.list(User.current(), (err, response) =>{
-        console.log(response)
        if(response.success){
-        // renderItem(response.list)
-        AccountsWidget.clear()
+        this.clear()
+        this.renderItem(response.data)
+        this.registerEvents()
        }
       })
     }
@@ -67,7 +71,8 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-   
+    const account = this.element.querySelectorAll('.account')
+    Array.from(account).forEach(li => li.remove())
   }
 
   /**
@@ -78,7 +83,11 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount( element ) {
-
+    const active = this.element.querySelector('.active')
+    if(active) active.classList.remove('active')
+    element.classList.add('active')
+    const idAccount = element.dataset.id
+    App.showPage( 'transactions', { account_id: idAccount })
   }
 
   /**
@@ -87,7 +96,12 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML( item ) {
-    
+        return `<li class="account" data-id="${item.id}">
+        <a href="#">
+            <span>${item.name}</span> /
+            <span>${item.sum}</span>
+        </a>
+    </li>`
   }
 
   /**
@@ -96,7 +110,10 @@ class AccountsWidget {
    * AccountsWidget.getAccountHTML HTML-код элемента
    * и добавляет его внутрь элемента виджета
    * */
-  renderItem( item ) {
-   console.log(item)
+  renderItem( items ) {
+    items.forEach(item => {
+      const li = this.getAccountHTML(item)
+      this.element.insertAdjacentHTML("beforeEnd", li)
+    })
   }
 }
