@@ -62,10 +62,7 @@ class User {
       url: this.URL + '/login',
       method: "POST",
       data,
-      callback: (err, response) => {
-        this.setCurrent(response.user)
-        callback(err, response)
-      }
+      callback
     })
   }
 
