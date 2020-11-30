@@ -22,7 +22,7 @@ class CreateTransactionForm extends AsyncForm {
    * Обновляет в форме всплывающего окна выпадающий список
    * */
   renderAccountsList() {
-      Account.list(User.current(), (err, response) =>{
+      User.current() && Account.list(User.current(), (err, response) =>{
        if(response.success){
         const select = this.element.querySelector('select')
         let options = ''
