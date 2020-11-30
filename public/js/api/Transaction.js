@@ -4,5 +4,6 @@
  * Имеет свойство URL со значением '/transaction'
  * */
 class Transaction extends Entity {
-    URL = '/transaction'
+    
 }
+Transaction.URL = '/transaction';
