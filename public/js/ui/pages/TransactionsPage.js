@@ -132,7 +132,7 @@ class TransactionsPage {
   formatDate( date ) {
     const months = ["января", "февраля","марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
     const format = new Date(date)
-    const dateString = `${format.getDay()} ${months[format.getMonth()-1]} ${format.getFullYear()} г. в ${format.getHours()}:${format.getMinutes()}`
+    const dateString = `${format.getDate()} ${months[format.getMonth()]} ${format.getFullYear()} г. в ${format.getHours()}:${format.getMinutes()<10?'0'+format.getMinutes():''+ format.getMinutes()}`
     return dateString
   }
 
