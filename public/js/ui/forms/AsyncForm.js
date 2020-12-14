@@ -46,7 +46,6 @@ class AsyncForm {
     for (let item of entries) {
       const key = item[0],
         value = item[1];
-      console.log(`${key}: ${value}`)
       Object.assign(data, {
         [key]: value
       })
