@@ -15,9 +15,7 @@ class Entity {
       url: this.URL,
       method: "GET",
       data,
-      callback: (err, response) => {
-        callback(err, response)
-      }
+        callback
     })
   }
 
@@ -27,7 +25,6 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback = f => f) {
-    console.log(data)
     Object.assign(data, {
       _method: 'PUT'
     })
@@ -35,9 +32,7 @@ class Entity {
       url: this.URL,
       method: "POST",
       data,
-      callback: (err, response) => {
-        callback(err, response)
-      }
+        callback
     })
   }
 
@@ -50,9 +45,7 @@ class Entity {
       url: this.URL + '/' + id,
       method: "GET",
       data,
-      callback: (err, response) => {
-        callback(err, response)
-      }
+        callback
     })
   }
 
@@ -69,9 +62,7 @@ class Entity {
       url: this.URL,
       method: "POST",
       data,
-      callback: (err, response) => {
-        callback(err, response)
-      }
+        callback
     })
   }
   
