@@ -141,14 +141,16 @@ class TransactionsPage {
    * item - объект с информацией о транзакции
    * */
   getTransactionHTML( item ) {
-    return `<div class="transaction ${item.type === 'expense'?'transaction_expense':'transaction_income'} row">
+    const data = this.formatDate(item.created_at)
+    const type = item.type.toLowerCase() === 'expense'?'transaction_expense':'transaction_income'
+    return `<div class="transaction ${type} row">
     <div class="col-md-7 transaction__details">
       <div class="transaction__icon">
           <span class="fa fa-money fa-2x"></span>
       </div>
       <div class="transaction__info">
           <h4 class="transaction__title">${item.name}</h4>
-          <div class="transaction__date">${this.formatDate(item.created_at)}</div>
+          <div class="transaction__date">${data}</div>
       </div>
     </div>
     <div class="col-md-3">
